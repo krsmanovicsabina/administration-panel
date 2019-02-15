@@ -1,7 +1,7 @@
 <template>
     <div>
         <!-- use the modal component, pass in the prop -->
-        <modal :available="slots" :shift="shift"  :date="date" v-if="showModal" @close="showModal = false" @patchmodal="sendPatch">
+        <modal  data-dismiss="modal" :available="slots" :shift="shift"  :date="date" v-if="showModal" @close="showModal = false" @patchmodal="sendPatch">
 
             <!--
               you can use custom content here to overwrite

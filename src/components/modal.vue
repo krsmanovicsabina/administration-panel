@@ -25,7 +25,7 @@
                         <span class="slot">
                             Slots
                         </span>
-                        <input v-model="custom" type="text" name="slots" id="slots" @keyup="validateSlots">
+                        <input  v-model="custom" type="text" name="slots" id="slots" @keyup="validateSlots">
 
                         <div class="modal-footer">
                             <slot name="footer">
@@ -57,7 +57,8 @@
         data() {
             return {
                 custom: null,
-                error: null
+                error: null,
+                transition: null
             }
         },
         methods: {
@@ -74,6 +75,7 @@
             validateSlots:function(e){
                 if (this.custom > this.available) {
                     this.error = "Number of slots can only be decreased"
+
                 } else {
                     this.error = null;
                 }
@@ -88,6 +90,98 @@
 </script>
 
 <style scoped>
+    .modal-mask {
+        position: fixed;
+        z-index: 9998;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, .5);
+        display: table;
+        transition: opacity .3s ease;
+    }
+    .modal-wrapper {
+        display: table-cell;
+        vertical-align: middle;
+    }
+    .modal-container {
+        width: 300px;
+        margin: 0px auto;
+        padding: 20px 30px;
+        background-color: #fff;
+        border-radius: 2px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, .33);
+        transition: all .3s ease;
+        font-family: Helvetica, Arial, sans-serif;
+    }
+    .modal-header h3 {
+        margin-top: 0;
+        color: #42b983;
+    }
+    .modal-body {
+        margin: 20px 0;
+    }
+    .modal-default-button {
+        float: right;
+    }
+    .modal-enter {
+        opacity: 0;
+    }
+    .modal-leave-active {
+        opacity: 0;
+    }
+    .modal-enter .modal-container,
+    .modal-leave-active .modal-container {
+        -webkit-transform: scale(1.1);
+        transform: scale(1.1);
+    }.modal-mask {
+         position: fixed;
+         z-index: 9998;
+         top: 0;
+         left: 0;
+         width: 100%;
+         height: 100%;
+         background-color: rgba(0, 0, 0, .5);
+         display: table;
+         transition: opacity .3s ease;
+     }
+    .modal-wrapper {
+        display: table-cell;
+        vertical-align: middle;
+    }
+    .modal-container {
+        width: 300px;
+        margin: 0px auto;
+        padding: 20px 30px;
+        background-color: #fff;
+        border-radius: 2px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, .33);
+        transition: all .3s ease;
+        font-family: Helvetica, Arial, sans-serif;
+    }
+
+    .modal-header h3 {
+        margin-top: 0;
+        color: #42b983;
+    }
+
+    .modal-body {
+        margin: 20px 0;
+    }
+
+    .modal-enter {
+        opacity: 0;
+    }
+
+    .modal-leave-active {
+        opacity: 0;
+    }
+    .modal-enter .modal-container,
+    .modal-leave-active .modal-container {
+        -webkit-transform: scale(1.1);
+        transform: scale(1.1);
+    }
     .arrow-up {
         width: 0;
         height: 0;
@@ -99,7 +193,6 @@
         position: absolute;
         top: -5px;
     }
-
     .arrow-white {
         width: 0;
         height: 0;
@@ -111,29 +204,21 @@
         position: absolute;
         top: -4px;
     }
-
-    .quantity::-webkit-inner-spin-button,
-    .quantity::-webkit-outer-spin-button {
-        -webkit-appearance: none !important;
-        margin: 0;
-    }
-
     .modal-mask {
         position: absolute;
         top: 65px;
         left: -50%;
         background-color: transparent;
     }
-
     .modal-container {
         height: 330px;
         border: 1px solid #ABABAB;
         box-shadow: none;
         transition: none;
     }
-
     .props {
         color: #A6ADB3;
+        padding-bottom: 8px;
     }
 
     .props:first-child {
@@ -141,12 +226,14 @@
         left: 0;
         display: inline-block;
         text-align: left;
+        margin-left: -75px;
     }
 
     .props:last-child {
         width: 50%;
         display: inline-block;
         text-align: left;
+
 
     }
 
@@ -161,6 +248,7 @@
         height: 30px;
         position: absolute;
         right: 33px;
+        text-align:center;
 
     }
 
@@ -207,5 +295,11 @@
         position: absolute;
         text-transform: capitalize;
     }
+    .date{
+        display: block;
+        position: absolute;
+        right: 66px;
+    }
+
 
 </style>

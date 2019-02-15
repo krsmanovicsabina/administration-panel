@@ -66,7 +66,7 @@
             }
         },
         methods: {
-            print(value){
+            print(value) {
                 this.print = value;
                 window.print();
             },
@@ -88,11 +88,11 @@
                         "custom": value.custom
                     })
                     .then(response => {
-                        axios
-                            .get('http://localhost:3000/availability?date=' + this.week)
-                            .then(response => (this.days = response.data))
+                            axios
+                                .get('http://localhost:3000/availability?date=' + this.week)
+                                .then(response => (this.days = response.data))
 
-                    }
+                        }
                     )
                     .catch(error => alert("ERROR " + error))
             }
@@ -111,19 +111,34 @@
 </script>
 
 <style scoped>
+    .print {
+        position: absolute;
+        left: 50%;
+        transform: translate(-50%);
+        padding-top: 5px;
+        font-size: 15px;
+        text-decoration: none;
+        color: #5B99C6;
+        font-weight: 600;
+    }
 
     h1 {
         font-size: 22px;
+        text-align: center;
     }
+
     header {
         text-align: center;
         margin: 50px 0 50px;
+        position:relative;
     }
+
     header button {
     }
+
     .previous-button {
         position: absolute;
-        margin-top: 15px;
+        margin-top: 10px;
         margin-left: -300px;
         background-color: #5495C4;
         color: #ffffff;
@@ -137,7 +152,7 @@
     .next-button {
         position: absolute;
         margin-left: 170px;
-        margin-top: 15px;
+        margin-top: 10px;
         width: 130px;
         height: 40px;
         color: #ffffff;
@@ -147,6 +162,7 @@
         outline: none;
         border: none;
     }
+
     table {
         text-align: center;
         margin: 0 auto;
@@ -158,12 +174,14 @@
         justify-content: center;
         border: none;
     }
+
     thead td {
         border: none;
         align-self: center;
         justify-content: center;
-        height: 50px;
+        height: 35px;
     }
+
     td {
         width: 150px;
         align-self: center;
@@ -175,17 +193,21 @@
         justify-content: center;
         position: relative;
     }
+
     tr {
         display: grid;
         grid-template-columns: repeat(8, 0fr);
     }
+
     tr td {
         padding-top: 8px;
     }
+
     tbody {
         align-self: center;
         margin: 0 auto;
     }
+
     .morning, .afternoon, .evening, .night {
         border: none;
         padding-top: 40px;
@@ -204,11 +226,11 @@
         font-weight: 600;
 
     }
-
     .print {
         text-decoration: none;
         color: #8FBAD9;
         font-weight: 600;
         cursor: pointer;
     }
+
 </style>
