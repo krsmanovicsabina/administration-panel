@@ -168,7 +168,7 @@
             text-align: center;
             display: flex;
             flex-direction: column;
-            flex-wrap: wrap;
+           overflow-x: scroll;
             .head {
                 display: flex;
                 align-self: center;
@@ -176,7 +176,6 @@
                 border: none;
                 flex-direction: row;
                 margin: 0;
-                flex-wrap: wrap;
 
                 .thead {
                     flex-direction: row;
@@ -195,7 +194,6 @@
             .table-row {
                 display: flex;
                 flex-direction: row;
-                flex-wrap: wrap;
                 min-height:0;
 
                 .table-cell {
@@ -211,7 +209,6 @@
             .tbody {
                 align-self: center;
                 min-height:0;
-                flex-wrap:wrap;
             }
             .table-cell {
                 width: 150px;
