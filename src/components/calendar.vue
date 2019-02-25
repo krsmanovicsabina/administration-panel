@@ -216,6 +216,7 @@
                             border-right: 1px solid $tableColor;
                             flex: 1;
                             min-width: 150px;
+                            padding: 0 40px;
                         }
                     }
                 }
@@ -237,7 +238,6 @@
                     margin: 0;
                     position: relative;
                     flex: 1;
-                    min-width: 150px;
                 }
             }
         }

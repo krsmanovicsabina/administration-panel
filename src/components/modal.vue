@@ -92,7 +92,7 @@
             }
 
         },
-        created: function () {
+      mounted() {
             this.custom = this.available;
         }
     }

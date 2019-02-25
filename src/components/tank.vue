@@ -25,11 +25,14 @@
         data() {
             return {
                 showModal: false,
-                slots: null,
+                slots: null
+
             }
         },
-
-        watch: function () {
+       mounted: function(){
+            this.slots = this.custom !== null ? this.custom : this.available;
+        },
+        updated: function(){
             this.slots = this.custom !== null ? this.custom : this.available;
         },
         methods: {
@@ -39,11 +42,9 @@
             },
             show() {
                 this.$modal.show();
-
             },
             hide() {
                 this.$modal.hide();
-
             }
         },
         props: {
@@ -56,7 +57,7 @@
         computed: {
             water: function () {
 
-                let filled = (100 - Math.floor(this.reserved / this.slots * 100)) + '%';
+                let filled = (100 - Math.floor(this.reserved /this.slots * 100)) + '%';
                 let style = {
                     background: "-webkit-linear-gradient(top, #ffffff " + filled + ",#bec9d4 " + filled + ",#bec9d4 88%,#bec9d4 100%,#bec9d4 100%)"
                 };
@@ -70,10 +71,6 @@
             },
 
         },
-        mounted() {
-
-            this.slots = this.custom !== null ? this.custom : this.available;
-        }
     }
 </script>
 
