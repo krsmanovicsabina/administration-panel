@@ -30,17 +30,19 @@
                         <span class="slot">
                             {{slots}}
                         </span>
-                        <input v-model="custom" type="text" name="slots" id="slots" @keyup="validateSlots">
+                            <input v-model="custom" type="text" name="slots" id="slots" @keyup="validateSlots">
                         </div>
                         <div class="modal-footer">
                             <slot name="footer">
                                 <p v-if="error" class="error-message">{{error}}</p>
-                                <button class=" cancel" @click="$emit('close')">
-                                    Cancel
-                                </button>
-                                <button type="submit" class="apply">
-                                    Apply
-                                </button>
+                                <div class="box-row">
+                                    <button class=" cancel" @click="$emit('close')">
+                                        Cancel
+                                    </button>
+                                    <button type="submit" class="apply">
+                                        Apply
+                                    </button>
+                                </div>
                             </slot>
                         </div>
                     </form>
@@ -65,7 +67,7 @@
                 transition: null,
                 dateTitle: "Date:",
                 shiftTitle: "Shift:",
-                slots:"Slots"
+                slots: "Slots"
             }
         },
         methods: {
@@ -102,11 +104,8 @@
         top: 65px;
         background-color: transparent;
         z-index: 999;
-        width: 100%;
-        height: 100%;
-        display: table;
         transition: opacity .3s ease;
-        left: -50%;
+        left:-50%;
         .arrow-up {
             width: 0;
             height: 0;
@@ -132,79 +131,52 @@
             top: -6px;
         }
         .modal-wrapper {
-            display: table-cell;
-            vertical-align: middle;
+            max-width: 300px;
             .modal-container {
-                width: 300px;
-                margin: 0px auto;
-                padding: 20px 30px;
+                padding: 20px 25px;
                 background-color: $lightColor;
                 border-radius: 2px;
                 transition: none;
                 font-family: $font-family-text;
-                height: 330px;
+                min-height: 330px;
                 border: 1px solid $modalBorder;
                 box-shadow: none;
                 .modal-header h3 {
-                    margin-top: 0;
                     color: $baseColor;
                     text-align: left;
                 }
-
                 .props-body {
                     padding: 20px 0 20px;
                     margin-bottom: 30px;
                     border-bottom: 1px solid $modalBorder;
                     .box-row {
-                        display: table-row;
-
+                        display: flex;
                         .props {
                             color: $modalBorder;
                             padding-bottom: 8px;
-                            display: table-cell;
-                            width: 50%;
-                            &:first-child {
-                                text-align: left;
-                                width: 150px;
-                            }
-                            &:last-child {
-                                text-align: left;
-                                width: 150px;
-                            }
+                            padding-right: 42px;
                         }
                     }
                     .box-row {
-                        display: table-row;
+                        display: flex;
+                        justify-content: space-between;
                         .response-data {
-                            display: table-cell;
-                            width: 50%;
                             text-transform: capitalize;
-                            &:first-child {
-                                text-align: left;
-                                width: 150px;
-                            }
-                            &:last-child {
-                                text-align: left;
-                                width: 150px;
-                            }
                         }
                     }
                 }
 
                 #form {
                     .box-row {
-                        display: table-row;
-
+                        display: flex;
+                        flex-direction: row;
+                        justify-content: space-between;
                         .slot {
-                            display: table-cell;
                             text-align: left;
-                            width:250px;
                         }
-
                         input {
                             width: 40px;
                             height: 30px;
-                           display:table-cell;
                             text-align: center;
                         }
                     }
@@ -213,34 +185,30 @@
                         p.error-message {
                             font-size: 14px;
                             text-align: left;
-                            border-bottom: 1px solid #ABABAB;
-                            padding-bottom: 10px;
+                            border-bottom: 1px solid $tableColor;
+                            padding-bottom:10px;
                         }
-                        button {
-                            padding: 7px 30px;
-                            background-color: #EFEFEF;
-                            font-weight: 600;
-                            border-color: transparent;
-                            margin-top: 20px;
-                            &.cancel {
-                                float: left;
-                            }
-                            &.apply {
-                                background-color: #E83D4D;
-                                color: #ffffff;
-                                float: right;
+                        .box-row {
+                            display: flex;
+                            flex-direction: row;
+                            justify-content: space-between;
+                            button {
+                                padding: 7px 30px;
+                                background-color: #EFEFEF;
+                                font-weight: 600;
+                                border-color: transparent;
+                                margin-top: 20px;
+                                &.apply {
+                                    background-color: #E83D4D;
+                                    color: $lightColor;
+                                    margin-left:15px;
+                                }
                             }
                         }
                     }
                 }
             }
         }
-    }
-
-    .modal-enter .modal-container,
-    .modal-leave-active .modal-container {
-        -webkit-transform: scale(1.1);
-        transform: scale(1.1);
     }
 
     .modal-enter {
@@ -250,12 +218,5 @@
     .modal-leave-active {
         opacity: 0;
     }
-
-    .modal-enter .modal-container,
-    .modal-leave-active .modal-container {
-        -webkit-transform: scale(1.1);
-        transform: scale(1.1);
-    }
-
 
 </style>

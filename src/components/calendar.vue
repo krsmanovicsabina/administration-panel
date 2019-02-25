@@ -8,43 +8,45 @@
             </div>
             <button v-on:click="nextWeek" class="main-button">Next</button>
         </header>
-
-        <div class="table">
-            <div class="head">
-                <div class="table-cell"></div>
-                <div class="thead" v-for=" day in days" :key="day.date">{{day.date | moment("ddd, D")}}</div>
-            </div>
-            <div class="tbody">
-                <div class="table-row">
-                    <div class="morning column table-cell">Morning shift</div>
-                    <div class="table-cell" v-for="day in days" :key="day.date">
-                        <tank @patchtank="patch" shift="morning" v-bind:date="day.date"
-                              v-bind:reserved="day.info.morning.booked"
-                              v-bind:available="day.info.morning.total" v-bind:custom="day.info.morning.custom"/>
-                    </div>
+        <div class="container">
+            <div class="table">
+                <div class="head">
+                    <div class="table-cell"></div>
+                    <div class="thead" v-for=" day in days" :key="day.date">{{day.date | moment("ddd, D")}}</div>
                 </div>
-                <div class="table-row">
-                    <div class="afternoon column table-cell">Afternoon shift</div>
-                    <div class="table-cell" v-for="day in days" :key="day.date">
-                        <tank @patchtank="patch" shift="afternoon" v-bind:date="day.date"
-                              v-bind:reserved="day.info.afternoon.booked"
-                              v-bind:available="day.info.afternoon.total" v-bind:custom="day.info.afternoon.custom"/>
+                <div class="tbody">
+                    <div class="table-row">
+                        <div class="morning column table-cell">Morning shift</div>
+                        <div class="table-cell" v-for="day in days" :key="day.date">
+                            <tank @patchtank="patch" shift="morning" v-bind:date="day.date"
+                                  v-bind:reserved="day.info.morning.booked"
+                                  v-bind:available="day.info.morning.total" v-bind:custom="day.info.morning.custom"/>
+                        </div>
                     </div>
-                </div>
-                <div class="table-row">
-                    <div class="evening column table-cell">Evening shift</div>
-                    <div class="table-cell" v-for="day in days" :key="day.date">
-                        <tank @patchtank="patch" shift="evening" v-bind:date="day.date"
-                              v-bind:reserved="day.info.evening.booked"
-                              v-bind:available="day.info.evening.total" v-bind:custom="day.info.evening.custom"/>
+                    <div class="table-row">
+                        <div class="afternoon column table-cell">Afternoon shift</div>
+                        <div class="table-cell" v-for="day in days" :key="day.date">
+                            <tank @patchtank="patch" shift="afternoon" v-bind:date="day.date"
+                                  v-bind:reserved="day.info.afternoon.booked"
+                                  v-bind:available="day.info.afternoon.total"
+                                  v-bind:custom="day.info.afternoon.custom"/>
+                        </div>
                     </div>
-                </div>
-                <div class="table-row">
-                    <div class="night column table-cell">Night shift</div>
-                    <div class="table-cell" v-for="day in days" :key="day.date">
-                        <tank @patchtank="patch" shift="night" v-bind:date="day.date"
-                              v-bind:reserved="day.info.night.booked"
-                              v-bind:available="day.info.night.total" v-bind:custom="day.info.night.custom"/>
+                    <div class="table-row">
+                        <div class="evening column table-cell">Evening shift</div>
+                        <div class="table-cell" v-for="day in days" :key="day.date">
+                            <tank @patchtank="patch" shift="evening" v-bind:date="day.date"
+                                  v-bind:reserved="day.info.evening.booked"
+                                  v-bind:available="day.info.evening.total" v-bind:custom="day.info.evening.custom"/>
+                        </div>
+                    </div>
+                    <div class="table-row">
+                        <div class="night column table-cell">Night shift</div>
+                        <div class="table-cell" v-for="day in days" :key="day.date">
+                            <tank @patchtank="patch" shift="night" v-bind:date="day.date"
+                                  v-bind:reserved="day.info.night.booked"
+                                  v-bind:available="day.info.night.total" v-bind:custom="day.info.night.custom"/>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -94,6 +96,13 @@
                     {
                         "custom": value.custom
                     })
+                    .then(response => {
+                            axios
+                                .get('http://localhost:3000/availability?date=' + this.week)
+                                .then(response => (this.days = response.data))
+
+                        }
+                    )
                     .catch(error => alert("ERROR " + error))
             }
         },
@@ -112,7 +121,7 @@
 
 <style lang="scss">
     .calendar-page {
-        width:100%;
+        width: 100%;
         header {
             display: flex;
             justify-content: center;
@@ -120,16 +129,13 @@
             .main-button {
                 background-color: $buttonColor;
                 color: $lightColor;
-                width: 130px;
-                height: 40px;
+                padding: 10px 25px;
                 border-radius: 5px;
                 font-weight: 600;
                 outline: none;
                 border: none;
                 align-self: center;
                 &:first-child {
-                    order: 0;
-                    flex: 0 1 auto;
                     &:before {
                         content: '<';
                         font-size: 14px;
@@ -138,8 +144,6 @@
                     }
                 }
                 &:last-child {
-                    order: 2;
-                    flex: 0 1 auto;
                     &:after {
                         content: '>';
                         font-size: 14px;
@@ -149,77 +153,92 @@
                 }
             }
             .page-title {
-                order: 1;
-                display: inline-block;
                 padding: 0 50px;
                 font-size: $font-size-sm;
                 text-align: center;
                 color: $baseColor;
                 .print {
-                    padding-top: 5px;
-                    font-size: 15px;
+                    display: block;
+                    margin-top: 5px;
+                    font-size: $font-size-sm;
                     text-decoration: none;
                     color: $linkColor;
                     font-weight: 600;
                 }
             }
         }
-        .table {
-            text-align: center;
-            display: flex;
-            flex-direction: column;
-           overflow-x: scroll;
-            .head {
-                display: flex;
-                align-self: center;
-                justify-content: center;
-                border: none;
-                flex-direction: row;
-                margin: 0;
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            overflow-x: auto;
 
-                .thead {
-                    flex-direction: row;
-                    width: 150px;
-                    border-bottom: 1px solid $tableColor;
-                }
-                .table-cell {
-                    border: none;
+            .table {
+                width: 100%;
+                text-align: center;
+                display: flex;
+                flex-direction: column;
+                .head {
+                    display: flex;
                     align-self: center;
                     justify-content: center;
-                    height: 30px;
+                    border: none;
+                    flex-direction: row;
                     margin: 0;
-
-                }
-            }
-            .table-row {
-                display: flex;
-                flex-direction: row;
-                min-height:0;
-
-                .table-cell {
-                    justify-content: center;
-                    vertical-align: middle;
-                    align-items: center;
-                    &:first-child {
+                    flex: 1;
+                    .thead {
+                        flex-direction: row;
+                        border-bottom: 1px solid $tableColor;
+                        flex: 1;
+                        min-width: 150px;
+                        padding: 10px;
+                    }
+                    .table-cell {
                         border: none;
-                        border-right: 1px solid $tableColor;
+                        align-self: center;
+                        justify-content: center;
+                        margin: 0;
+                        flex: 1;
+                        min-width: 150px;
                     }
                 }
-            }
-            .tbody {
-                align-self: center;
-                min-height:0;
-            }
-            .table-cell {
-                width: 150px;
-                align-self: center;
-                border-right: 1px solid $tableColor;
-                border-bottom: 1px solid $tableColor;
-                height: 100px;
-                display: flex;
-                vertical-align: middle;
-                margin: 0;
-                position:relative;
+                .table-row {
+                    display: flex;
+                    flex-direction: row;
+                    .table-cell {
+                        justify-content: center;
+                        vertical-align: middle;
+                        align-items: center;
+                        flex: 1;
+                        min-width: 150px;
+                        &:first-child {
+                            border: none;
+                            border-right: 1px solid $tableColor;
+                            flex: 1;
+                            min-width: 150px;
+                        }
+                    }
+                }
+                .tbody {
+                    align-self: center;
+                    .column {
+                        min-height:100px;
+                        flex: 1;
+                        justify-content: flex-start;
+                        text-align:left;
+                    }
+                }
+                .table-cell {
+                    align-self: center;
+                    border-right: 1px solid $tableColor;
+                    border-bottom: 1px solid $tableColor;
+                    display: flex;
+                    vertical-align: middle;
+                    margin: 0;
+                    position: relative;
+                    flex: 1;
+                    min-width: 150px;
+                }
             }
         }
     }

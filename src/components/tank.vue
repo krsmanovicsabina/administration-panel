@@ -1,6 +1,7 @@
 <template>
     <div class="tank-component">
-        <modal data-dismiss="modal" :available="slots" :shift="shift"  :date="date" v-if="showModal" @close="showModal = false" @patchmodal="sendPatch">
+        <modal data-dismiss="modal" :available="slots" :shift="shift" :date="date" v-if="showModal"
+               @close="showModal = false" @patchmodal="sendPatch">
 
             <h3 slot="header">Change availability</h3>
         </modal>
@@ -27,10 +28,8 @@
                 slots: null,
             }
         },
-        created: function(){
-          this.slots = this.custom !== null ? this.custom : this.available;
-        },
-        updated: function(){
+
+        watch: function () {
             this.slots = this.custom !== null ? this.custom : this.available;
         },
         methods: {
@@ -57,7 +56,7 @@
         computed: {
             water: function () {
 
-                let filled = (100 - Math.floor(this.reserved /this.slots * 100)) + '%';
+                let filled = (100 - Math.floor(this.reserved / this.slots * 100)) + '%';
                 let style = {
                     background: "-webkit-linear-gradient(top, #ffffff " + filled + ",#bec9d4 " + filled + ",#bec9d4 88%,#bec9d4 100%,#bec9d4 100%)"
                 };
@@ -71,11 +70,17 @@
             },
 
         },
+        mounted() {
+
+            this.slots = this.custom !== null ? this.custom : this.available;
+        }
     }
 </script>
 
 <style lang="scss">
     .tank-component {
+        padding:10px 30px;
+        position:relative;
         .circle {
             width: 80px;
             height: 80px;
@@ -84,7 +89,6 @@
             text-align: center;
             color: $baseColor;
             display: flex;
-            -webkit-align-items: center;
             align-items: center;
             .circle-text {
                 font-size: $font-size-base;
