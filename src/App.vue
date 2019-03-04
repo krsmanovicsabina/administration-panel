@@ -7,14 +7,12 @@
 
 <script>
 
-    import calendar from './components/calendar';
+    import Calendar from './components/Calendar';
 
 
     export default {
-        name: 'app',
         components: {
-            calendar,
-
+            Calendar,
         },
         data() {
             return {}
@@ -28,7 +26,8 @@
         margin: 0;
         padding: 0;
     }
+
     body {
-        font-family:$font-family-text;
+        font-family: $font-family-text;
     }
 </style>

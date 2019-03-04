@@ -25,12 +25,12 @@
                             <span class="response-data">{{date}}</span>
                         </div>
                     </div>
-                    <form id="form" @submit="slotChange">
+                    <form id="form" @submit.prevent="slotChange">
                         <div class="box-row">
                         <span class="slot">
                             {{slots}}
                         </span>
-                            <input v-model="custom" type="text" name="slots" id="slots" @keyup="validateSlots">
+                            <input v-model="custom" type="text" name="slots" id="slots" @keyup.prevent="validateSlots">
                         </div>
                         <div class="modal-footer">
                             <slot name="footer">
@@ -54,7 +54,6 @@
 
 <script>
     export default {
-        name: "modal",
         props: {
             date: String,
             shift: String,
@@ -71,7 +70,7 @@
             }
         },
         methods: {
-            slotChange: function (e) {
+            slotChange() {
                 if (this.custom > this.available) {
                     this.error = "Number of slots can only be decreased"
                 } else {
@@ -79,20 +78,17 @@
                     this.error = null;
                     this.$emit('close');
                 }
-                e.preventDefault()
             },
-            validateSlots: function (e) {
+            validateSlots() {
                 if (this.custom > this.available) {
                     this.error = "Number of slots can only be decreased"
-
                 } else {
                     this.error = null;
                 }
-                e.preventDefault();
             }
 
         },
-      mounted() {
+        mounted() {
             this.custom = this.available;
         }
     }
@@ -105,7 +101,8 @@
         background-color: transparent;
         z-index: 999;
         transition: opacity .3s ease;
-        left:-50%;
+        left: -50%;
+
         .arrow-up {
             width: 0;
             height: 0;
@@ -118,6 +115,7 @@
             position: absolute;
             top: -7px;
         }
+
         .arrow-white {
             width: 0;
             height: 0;
@@ -130,8 +128,10 @@
             position: absolute;
             top: -6px;
         }
+
         .modal-wrapper {
             max-width: 300px;
+
             .modal-container {
                 padding: 20px 25px;
                 background-color: $lightColor;
@@ -141,25 +141,31 @@
                 min-height: 330px;
                 border: 1px solid $modalBorder;
                 box-shadow: none;
+
                 .modal-header h3 {
                     color: $baseColor;
                     text-align: left;
                 }
+
                 .props-body {
                     padding: 20px 0 20px;
                     margin-bottom: 30px;
                     border-bottom: 1px solid $modalBorder;
+
                     .box-row {
                         display: flex;
+
                         .props {
                             color: $modalBorder;
                             padding-bottom: 8px;
                             padding-right: 42px;
                         }
                     }
+
                     .box-row {
                         display: flex;
                         justify-content: space-between;
+
                         .response-data {
                             text-transform: capitalize;
                         }
@@ -171,37 +177,44 @@
                         display: flex;
                         flex-direction: row;
                         justify-content: space-between;
+
                         .slot {
                             text-align: left;
                         }
+
                         input {
                             width: 40px;
                             height: 30px;
                             text-align: center;
                         }
                     }
+
                     .modal-footer {
                         padding-top: 20px;
+
                         p.error-message {
                             font-size: 14px;
                             text-align: left;
                             border-bottom: 1px solid $tableColor;
-                            padding-bottom:10px;
+                            padding-bottom: 10px;
                         }
+
                         .box-row {
                             display: flex;
                             flex-direction: row;
                             justify-content: space-between;
+
                             button {
                                 padding: 7px 30px;
                                 background-color: #EFEFEF;
                                 font-weight: 600;
                                 border-color: transparent;
                                 margin-top: 20px;
+
                                 &.apply {
                                     background-color: #E83D4D;
                                     color: $lightColor;
-                                    margin-left:15px;
+                                    margin-left: 15px;
                                 }
                             }
                         }
